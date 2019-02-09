@@ -42,9 +42,9 @@ jobs:
           name: Copy deployment artifacts to workspace
           command: |
             cp target/${CIRCLE_PROJECT_REPONAME}-*.jar ~/repo/monkey-mongo-service.jar
-            cp target/zerocode-*.csv ~/repo
-            cp target/zerocode-*.html ~/repo
-            cp -R target/zerocode-test-reports ~/repo
+#            cp target/zerocode-*.csv ~/repo
+#            cp target/zerocode-*.html ~/repo
+#            cp -R target/zerocode-test-reports ~/repo
       - store_test_results:
           path: target/surefire-reports
       - store_artifacts:
@@ -56,8 +56,8 @@ jobs:
       - persist_to_workspace:
           root: ~/repo
           paths:
-            - zerocode-test-reports
-            - zerocode-junit-interactive-fuzzy-search.html
+#            - zerocode-test-reports
+#            - zerocode-junit-interactive-fuzzy-search.html
             - monkey-mongo-service.jar
             
   release:

@@ -1,8 +1,8 @@
 spring:
   data:
     mongodb:
-      database: ${mongo.database}
-      port: ${mongo.port}
-      host: ${mongo.host}
-      username: ${mongo.user}
-      password: ${mongo.password}
+      database: ${mongo.database:local}
+      port: ${mongo.port:27017}
+      host: ${mongo.host:localhost}
+      username: ${mongo.user:user}
+      password: ${mongo.password:password}

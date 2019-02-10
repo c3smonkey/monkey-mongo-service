@@ -9,8 +9,29 @@ oc new-project dev \
 ## Deploy Spring Boot App with S2i
 ```bash
 oc new-app \
-    codecentric/springboot-maven3-centos~https://github.com/c3smonkey/monkey-mongo-service.git \
-    --name=monkey-app \
-    -l app=monkey-app  \
-    -n dev
+        codecentric/springboot-maven3-centos~https://github.com/c3smonkey/monkey-mongo-service.git \
+        -e mongo.user='<USER>' \
+        -e mongo.password='<PASSWORD>' \
+        -e mongo.host='<HOST>' \
+        -e mongo.port='<PORT>' \
+        -e mongo.database='<DATABASE>' \
+        --name=monkey-app \
+        -l app=monkey-app  \
+        -n dev
 ```
+
+## Get all 
+```bash
+oc get all --selector app=monkey-app
+```
+
+## Delete all 
+```bash
+oc delete all --selector app=monkey-app
+```
+
+
+
+-e POSTGRESQL_USER=user \
+        -e POSTGRESQL_DATABASE=db \
+        -e POSTGRESQL_PASSWORD=password

@@ -30,8 +30,3 @@ oc get all --selector app=monkey-app
 oc delete all --selector app=monkey-app
 ```
 
-
-
--e POSTGRESQL_USER=user \
-        -e POSTGRESQL_DATABASE=db \
-        -e POSTGRESQL_PASSWORD=password

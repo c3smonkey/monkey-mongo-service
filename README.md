@@ -69,3 +69,15 @@ oc delete all --selector app=monkey-app
 ```
 
 
+# i18n API Calls
+
+## Validation Messages
+
+```bash
+http POST :8080/api/customer/ age=23 "Accept-Language: de"
+```
+
+Swiss german validation message
+```bash
+http POST :8080/api/customer/ age=23 "Accept-Language: de-CH"
+```

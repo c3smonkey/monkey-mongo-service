@@ -9,14 +9,14 @@ import java.util.*
 
 @Relation(collectionRelation = "customers")
 class CustomerResource(
-        val customerId: String = UUID.randomUUID().toString(),
+        val customerId: String? = UUID.randomUUID().toString(),
         var firstName: String?,
         var lastName: String?,
-        var age: Int?
+        var age: Int?,
+        var address: Address?
 ) : ResourceSupport(){}
 
 
-// TODO this class must be open (Cannot subclass final class)
 open class CustomerResources(customer: Iterable<CustomerResource>) : Resources<CustomerResource>(customer) {
     val total = content.size
 }
@@ -32,7 +32,7 @@ class CustomerResourceAssembler : IdentifiableResourceAssemblerSupport<Customer,
                     customerId = entity.customerId,
                     firstName = entity.firstName,
                     lastName = entity.lastName,
-                    age = entity.age
-
+                    age = entity.age,
+                    address = entity.address
             )
 }

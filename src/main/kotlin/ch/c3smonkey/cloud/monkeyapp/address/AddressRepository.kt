@@ -1,4 +1,4 @@
-package ch.c3smonkey.cloud.monkeyapp.customer
+package ch.c3smonkey.cloud.monkeyapp.address
 
 import org.springframework.data.mongodb.repository.MongoRepository
 

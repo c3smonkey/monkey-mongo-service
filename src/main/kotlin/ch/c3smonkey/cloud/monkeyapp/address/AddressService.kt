@@ -1,5 +1,6 @@
-package ch.c3smonkey.cloud.monkeyapp.customer
+package ch.c3smonkey.cloud.monkeyapp.address
 
+import ch.c3smonkey.cloud.monkeyapp.address.AddressRepository
 import org.springframework.data.domain.Example
 import org.springframework.stereotype.Service
 

@@ -1,7 +1,7 @@
 package ch.c3smonkey.cloud.monkeyapp
 
-import ch.c3smonkey.cloud.monkeyapp.customer.Address
-import ch.c3smonkey.cloud.monkeyapp.customer.Customer
+ import ch.c3smonkey.cloud.monkeyapp.address.Address
+ import ch.c3smonkey.cloud.monkeyapp.customer.Customer
 import ch.c3smonkey.cloud.monkeyapp.customer.CustomerController
 import ch.c3smonkey.cloud.monkeyapp.customer.CustomerRepository
 import ch.c3smonkey.cloud.monkeyapp.department.Realm
@@ -53,6 +53,17 @@ class DataLoader(val customerRepository: CustomerRepository, val realmRepository
         realmRepository.deleteAll()
 
         val e = customerRepository.save(Customer(firstName = "John", lastName = "Doe", age = 33,
+                address = Address(
+                        street = "4 Pennsylvania Plaza",
+                        postalCode = "10001",
+                        city = "New York",
+                        country = "USA",
+                        countryCode = "NY"
+
+                )))
+
+
+        customerRepository.save(Customer(firstName = "Jack", lastName = "Bauer", age = 4,
                 address = Address(
                         street = "4 Pennsylvania Plaza",
                         postalCode = "10001",

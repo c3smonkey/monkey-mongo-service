@@ -1,4 +1,4 @@
-package ch.c3smonkey.cloud.monkeyapp.customer
+package ch.c3smonkey.cloud.monkeyapp.address
 
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpStatus

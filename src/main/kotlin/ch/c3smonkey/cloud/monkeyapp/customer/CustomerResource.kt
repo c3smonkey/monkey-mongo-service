@@ -1,5 +1,6 @@
 package ch.c3smonkey.cloud.monkeyapp.customer
 
+import ch.c3smonkey.cloud.monkeyapp.address.Address
 import org.springframework.hateoas.ResourceSupport
 import org.springframework.hateoas.Resources
 import org.springframework.hateoas.core.Relation

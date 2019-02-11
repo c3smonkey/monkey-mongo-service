@@ -1,5 +1,6 @@
 package ch.c3smonkey.cloud.monkeyapp.customer
 
+import ch.c3smonkey.cloud.monkeyapp.address.Address
 import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.TypeAlias
 import org.springframework.data.mongodb.core.mapping.Document
@@ -10,7 +11,7 @@ import javax.validation.constraints.NotBlank
 /**
  * Domain  Model
  */
-@Document
+@Document(collection = "customers")
 @TypeAlias("Customer") // MongoDb _class name without package
 data class Customer(
         @Id val customerId: String? = UUID.randomUUID().toString(),

@@ -44,7 +44,6 @@ class CustomerController(var customerService: CustomerService, val customerResou
         entity.age = customer.age
         entity.firstName = customer.firstName
         entity.lastName = customer.lastName
-//        entity.address = customer.address // TODO check solution
 
         val updatedEntity = customerService.update(entity)
         return ResponseEntity<CustomerResource>(customerResourceAssembler.toResource(updatedEntity), HttpStatus.OK)

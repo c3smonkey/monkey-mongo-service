@@ -1,6 +1,5 @@
 package ch.c3smonkey.cloud.monkeyapp.customer
 
-import ch.c3smonkey.cloud.monkeyapp.address.Address
 import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.TypeAlias
 import org.springframework.data.mongodb.core.mapping.Document
@@ -27,3 +26,10 @@ data class Customer(
     }
 }
 
+data class Address(
+        var street: String?,
+        var city: String?,
+        var postalCode: String?,
+        var countryCode: String?,
+        var country: String?
+)

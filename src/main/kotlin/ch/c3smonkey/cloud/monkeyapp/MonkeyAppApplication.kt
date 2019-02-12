@@ -1,6 +1,6 @@
 package ch.c3smonkey.cloud.monkeyapp
 
- import ch.c3smonkey.cloud.monkeyapp.address.Address
+ import ch.c3smonkey.cloud.monkeyapp.customer.Address
  import ch.c3smonkey.cloud.monkeyapp.customer.Customer
 import ch.c3smonkey.cloud.monkeyapp.customer.CustomerController
 import ch.c3smonkey.cloud.monkeyapp.customer.CustomerRepository

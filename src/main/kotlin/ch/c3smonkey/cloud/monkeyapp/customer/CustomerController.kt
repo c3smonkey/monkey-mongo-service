@@ -11,6 +11,7 @@ import javax.validation.Valid
 /*****
  * Controller
  */
+@CrossOrigin(origins = arrayOf("*"), maxAge = 3600)
 @RestController
 @RequestMapping(value = ["/api/customer"])
 class CustomerController(var customerService: CustomerService, val customerResourceAssembler: CustomerResourceAssembler) {

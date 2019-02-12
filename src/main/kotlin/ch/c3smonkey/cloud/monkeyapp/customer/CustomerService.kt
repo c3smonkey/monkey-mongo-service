@@ -8,9 +8,6 @@ import org.springframework.data.mongodb.core.query.Update
 import org.springframework.stereotype.Service
 
 
-
-
-
 /*****
  * Service Interface
  */
@@ -41,13 +38,6 @@ class CustomerServiceImpl(val customerRepository: CustomerRepository,
             customerRepository.deleteById(id)
 
     override fun update(entity: Customer): Customer? {
-
-        println(customerRepository.findByFirstName("John")) // TODO  work
-
-        println(customerRepository.findByAddressCountryCode("NY"))  // TODO don`t work
-        println(customerRepository.findByAddressCountry("USA")) // TODO don`t work
-
-
         // TODO work
 //        val query = Query(Criteria.where("address.country").`is`("USA")) // TODO query where ID is....
         val query = Query(Criteria.where("customerId").`is`(entity.customerId)) // TODO query where ID is....
@@ -63,7 +53,7 @@ class CustomerServiceImpl(val customerRepository: CustomerRepository,
     }
 
 //        return entity
-        //return customerRepository.save(entity)
+    //return customerRepository.save(entity)
 //    }
 
 //    override fun update(entity: Customer): Customer =
@@ -72,8 +62,26 @@ class CustomerServiceImpl(val customerRepository: CustomerRepository,
     override fun exists(entity: Customer): Boolean =
             customerRepository.exists(Example.of(entity));
 
-    override fun findAll(): List<Customer> =
-            customerRepository.findAll()
+
+
+
+
+
+    //    override fun findAll(): List<Customer> =
+//            customerRepository.findAll()
+    override fun findAll(): List<Customer> {
+
+
+
+
+        println(customerRepository.findCustomerByFirstName("John")) // TODO  work
+
+        println(customerRepository.findCustomerByAddressCountryCode("NY"))  // TODO don`t work
+        println(customerRepository.findCustomerByAddressCountry("USA")) // TODO don`t work
+
+
+        return customerRepository.findAll()
+    }
 
     override fun deleteAll() =
             customerRepository.deleteAll()

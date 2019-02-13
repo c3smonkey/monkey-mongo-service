@@ -11,3 +11,8 @@ management:
   info:
     git:
       mode: full
+  endpoints:
+    web:
+      cors:
+        allowed-origins: '*'
+        allowed-methods: GET

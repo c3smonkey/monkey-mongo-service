@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 
 
-@CrossOrigin(origins = arrayOf("*"), maxAge = 3600)
 @SpringBootApplication
 class MonkeyAppApplication
 

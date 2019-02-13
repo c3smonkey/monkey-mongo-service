@@ -6,3 +6,8 @@ spring:
       host: ${mongo.host:localhost}
       username: ${mongo.user:user}
       password: ${mongo.password:password}
+
+management:
+  info:
+    git:
+      mode: full

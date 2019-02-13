@@ -81,3 +81,70 @@ Swiss german validation message
 ```bash
 http POST :8080/api/customer/ age=23 "Accept-Language: de-CH"
 ```
+
+
+
+
+
+
+# Blue Green
+## Deploy Spring Boot App as Docker Image 
+### Feature 1
+```bash
+oc new-app --docker-image=c3smonkey/monkey-mongo-service:feature1 \
+    --name='feature1' \
+    -l name='feature1' \
+    -e mongo.user='<USER>' \
+    -e mongo.password='<PASSWORD>' \
+    -e mongo.host='<HOST>' \
+    -e mongo.port='<PORT>' \
+    -e mongo.database='<DATABASE>' \
+    -e SELECTOR=feature1
+```
+```bash
+oc expose service feature1 \
+    --name=feature1 \
+    -l name='feature1'
+```
+
+
+### Feature 2
+```bash
+oc new-app --docker-image=c3smonkey/monkey-mongo-service:feature2 \
+    --name='feature2' \
+    -l name='feature2' \
+    -e mongo.user='<USER>' \
+    -e mongo.password='<PASSWORD>' \
+    -e mongo.host='<HOST>' \
+    -e mongo.port='<PORT>' \
+    -e mongo.database='<DATABASE>' \
+    -e SELECTOR=feature2
+```
+```bash
+oc expose service feature2 \
+    --name=feature2 \
+    -l name='feature2'
+```
+
+
+
+## Expose Feature1 Service to BlueGreen Service
+```bash
+oc expose service feature1 --name=bluegreen
+```
+
+### Test Routing
+```bash
+for x in (seq 11); http http://bluegreen-dev.apps.c3smonkey.ch/actuator/info | jq .git.branch ; end
+```
+
+
+## Switch to Feature2 
+```bash
+oc patch route/bluegreen -p '{"spec":{"to":{"name":"feature2"}}}' 
+```
+## Switch to Feature1
+```bash
+oc patch route/bluegreen -p '{"spec":{"to":{"name":"feature1"}}}'
+```
+

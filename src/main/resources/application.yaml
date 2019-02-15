@@ -7,14 +7,10 @@ spring:
           sources:
             # Spring Cloud Kubernetes will lookup a ConfigMap named c1 in namespace default-namespace
             - name: c1
-
   data:
     mongodb:
-      database: ${database-name:local}
-      port: ${database-port:27017}
-      host: ${database-host:localhost}
-      username: ${database-user:user}
-      password: ${database-password:password}
+      uri: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongodb/${MONGO_DATABASE}
+
 
 
 management:
@@ -26,3 +22,16 @@ management:
       cors:
         allowed-origins: '*'
         allowed-methods: GET
+
+
+---
+spring:
+  profiles: mlab
+
+  data:
+    mongodb:
+      database: ${database-name:local}
+      port: ${database-port:27017}
+      host: ${database-host:localhost}
+      username: ${database-user:user}
+      password: ${database-password:password}

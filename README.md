@@ -148,3 +148,44 @@ oc patch route/bluegreen -p '{"spec":{"to":{"name":"feature2"}}}'
 oc patch route/bluegreen -p '{"spec":{"to":{"name":"feature1"}}}'
 ```
 
+
+
+
+
+
+
+
+
+
+
+oc get secrets
+oc secrets link --for=mount,pull default mongodb-ephemeral-dksxt-credentials-21m5m
+oc describe serviceaccount default
+oc policy add-role-to-user view system:serviceaccount:dev:default
+
+
+
+
+
+$ kubectl create clusterrolebinding admin --clusterrole=cluster-admin --serviceaccount=default:default
+
+oc policy add-role-to-user cluster-reader system:serviceaccount:dev:default
+
+
+
+
+
+
+```bash
+oc new-app --docker-image=c3smonkey/monkey-mongo-service:k8s \
+    --name='k8s' \
+    -l name='k8s' \
+    -e SELECTOR=k8s
+    
+```
+
+```bash
+oc get all --selector app=k8s 
+```
+        
+        

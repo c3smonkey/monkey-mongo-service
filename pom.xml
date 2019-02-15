@@ -41,6 +41,13 @@
 			<artifactId>evo-inflector</artifactId>
 			<version>${evo-inflector.version}</version>
 		</dependency>
+		<!--Spring-Cloud-Kubernetes -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-kubernetes</artifactId>
+			<version>1.0.0.RELEASE</version>
+		</dependency>
+
 
 		<!-- Kotlin -->
 		<dependency>
@@ -149,5 +156,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

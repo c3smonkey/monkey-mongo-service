@@ -1,11 +1,21 @@
 spring:
+  application:
+    name: monkey-mongo-service
+    cloud:
+      kubernetes:
+        config:
+          sources:
+            # Spring Cloud Kubernetes will lookup a ConfigMap named c1 in namespace default-namespace
+            - name: c1
+
   data:
     mongodb:
-      database: ${mongo.database:local}
-      port: ${mongo.port:27017}
-      host: ${mongo.host:localhost}
-      username: ${mongo.user:user}
-      password: ${mongo.password:password}
+      database: ${database-name:local}
+      port: ${database-port:27017}
+      host: ${database-host:localhost}
+      username: ${database-user:user}
+      password: ${database-password:password}
+
 
 management:
   info:

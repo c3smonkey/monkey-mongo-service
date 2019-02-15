@@ -93,11 +93,6 @@ http POST :8080/api/customer/ age=23 "Accept-Language: de-CH"
 oc new-app --docker-image=c3smonkey/monkey-mongo-service:feature1 \
     --name='feature1' \
     -l name='feature1' \
-    -e mongo.user='<USER>' \
-    -e mongo.password='<PASSWORD>' \
-    -e mongo.host='<HOST>' \
-    -e mongo.port='<PORT>' \
-    -e mongo.database='<DATABASE>' \
     -e SELECTOR=feature1
 ```
 ```bash
@@ -112,11 +107,6 @@ oc expose service feature1 \
 oc new-app --docker-image=c3smonkey/monkey-mongo-service:feature2 \
     --name='feature2' \
     -l name='feature2' \
-    -e mongo.user='<USER>' \
-    -e mongo.password='<PASSWORD>' \
-    -e mongo.host='<HOST>' \
-    -e mongo.port='<PORT>' \
-    -e mongo.database='<DATABASE>' \
     -e SELECTOR=feature2
 ```
 ```bash

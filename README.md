@@ -139,6 +139,7 @@ for x in (seq 11); http http://bluegreen-dev.apps.c3smonkey.ch/actuator/info | j
 ```
 
 
+
 ## Switch to Feature2 
 ```bash
 oc patch route/bluegreen -p '{"spec":{"to":{"name":"feature2"}}}' 
@@ -155,27 +156,24 @@ oc patch route/bluegreen -p '{"spec":{"to":{"name":"feature1"}}}'
 
 
 
+### Debploy Service with Openshift MongoDB
 
-
-
+Get Secrets from  Ephemeral MongoDB
+```bash
 oc get secrets
-oc secrets link --for=mount,pull default mongodb-ephemeral-dksxt-credentials-21m5m
-oc describe serviceaccount default
+```
+Mount Secret to _default_ ServiceAccount 
+```bash
+oc secrets link --for=mount default mongodb-ephemeral-dksxt-credentials-21m5m
+```
+
+Update View Policy to Devaults ServiceAccount 
+```bash
 oc policy add-role-to-user view system:serviceaccount:dev:default
+```
 
 
-
-
-
-$ kubectl create clusterrolebinding admin --clusterrole=cluster-admin --serviceaccount=default:default
-
-oc policy add-role-to-user cluster-reader system:serviceaccount:dev:default
-
-
-
-
-
-
+Deploy Image
 ```bash
 oc new-app --docker-image=c3smonkey/monkey-mongo-service:k8s \
     --name='k8s' \
@@ -183,9 +181,24 @@ oc new-app --docker-image=c3smonkey/monkey-mongo-service:k8s \
     -e SELECTOR=k8s
     
 ```
-
+Expose Service
 ```bash
-oc get all --selector app=k8s 
+oc expose svc/k8s
 ```
-        
+
+
+
+
+## Debug
+```bash
+oc debug dc/k8s
+```
+
+## CleanUp
+```bash
+oc delete all --selector app=k8s 
+```
+```bash
+oc secrets unlink default  mongodb-ephemeral-dksxt-credentials-21m5m
+```
         

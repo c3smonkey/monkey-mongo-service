@@ -20,7 +20,33 @@
 		<evo-inflector.version>1.2.2</evo-inflector.version>
 		<zerocode-rest-bdd.version>1.2.17</zerocode-rest-bdd.version>
 		<maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
+		<spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
+		<spring-cloud-starter-kubernetes.version>1.0.0.RELEASE</spring-cloud-starter-kubernetes.version>
 	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	<!--<repositories>
+		<repository>
+			<id>spring-repo</id>
+			<name>Spring Repository</name>
+			<url>https://repo.spring.io/release</url>
+		</repository>
+		<repository>
+			<id>spring-milestone</id>
+			<name>Spring Milestone Repository</name>
+			<url>https://repo.spring.io/milestone</url>
+		</repository>
+	</repositories>-->
 
 	<dependencies>
 		<!-- Spring -->
@@ -45,7 +71,7 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-kubernetes</artifactId>
-			<version>1.0.0.RELEASE</version>
+			<version>${spring-cloud-starter-kubernetes.version}</version>
 		</dependency>
 
 
@@ -77,6 +103,8 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+
 
 	<build>
 		<sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>

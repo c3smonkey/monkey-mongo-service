@@ -6,6 +6,24 @@ oc new-project dev \
          --description="Development Stage" \
          --display-name="Development"
 ```
+
+## Add View Role for default service account
+This is used for reading the Secrets via Spring Boot App 
+```bash
+oc policy add-role-to-user view system:serviceaccount:dev:default
+```
+
+## Deploy Feature1
+```bash
+oc apply -f k8s/deployment-feature1.yaml
+```
+
+## Import Imagage
+```bash
+oc import-image feature1 --from=c3smonkey/monkey-mongo-service:feature1
+```
+
+
 ## Deploy Spring Boot App with S2i
 ```bash
 oc new-app \
@@ -95,6 +113,11 @@ oc new-app --docker-image=c3smonkey/monkey-mongo-service:feature1 \
     -l name='feature1' \
     -e SELECTOR=feature1
 ```
+Or 
+```bash
+oc import-image feature1 --from=c3smonkey/monkey-mongo-service:feature1
+```
+
 ```bash
 oc expose service feature1 \
     --name=feature1 \
@@ -114,8 +137,6 @@ oc expose service feature2 \
     --name=feature2 \
     -l name='feature2'
 ```
-
-
 
 ## Expose Feature1 Service to BlueGreen Service
 ```bash
@@ -200,52 +221,23 @@ oc get routes
 
 
 
-
-
-
-### Debploy Service with Openshift MongoDB
-
-Get Secrets from  Ephemeral MongoDB
-```bash
-oc get secrets
-```
-Mount Secret to _default_ ServiceAccount 
-```bash
-oc secrets link --for=mount default mongodb-ephemeral-dksxt-credentials-21m5m
-```
-
-Update View Policy to Devaults ServiceAccount 
-```bash
-oc policy add-role-to-user view system:serviceaccount:dev:default
-```
-
-
-Deploy Image
-```bash
-oc new-app --docker-image=c3smonkey/monkey-mongo-service:k8s \
-    --name='k8s' \
-    -l name='k8s' \
-    -e SELECTOR=k8s
-    
-```
-Expose Service
-```bash
-oc expose svc/k8s
-```
-
-
-
-
 ## Debug
 ```bash
-oc debug dc/k8s
+oc debug dc/feature1
 ```
 
 ## CleanUp
 ```bash
-oc delete all --selector app=k8s 
+oc delete all --selector app=feature1 
 ```
 ```bash
-oc secrets unlink default  mongodb-ephemeral-dksxt-credentials-21m5m
+oc secrets unlink default  mongodb
 ```
+
+
+
+        
+        
+        
+        
         

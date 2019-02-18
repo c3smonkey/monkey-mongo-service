@@ -7,6 +7,7 @@ spring:
           sources:
             # Spring Cloud Kubernetes will lookup a ConfigMap named c1 in namespace default-namespace
             - name: c1
+
   data:
     mongodb:
       uri: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongodb/${MONGO_DATABASE}

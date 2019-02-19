@@ -1,0 +1,180 @@
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-feature1
+  labels:
+    app: service-feature1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-feature1
+  template:
+    metadata:
+      labels:
+        app: service-feature1
+    spec:
+      containers:
+        - name: service-feature1
+          image: c3smonkey/monkey-mongo-service:feature1
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SELECTOR
+              value: service-feature1
+            - name: MONGO_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: database-user
+                  name: mongodb
+            - name: MONGO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: database-password
+                  name: mongodb
+            - name: MONGO_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  key: database-name
+                  name: mongodb
+triggers:
+    - type: "ConfigChange"
+    - type: "ImageChange"
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - "service-feature1"
+        from:
+          kind: "ImageStreamTag"
+          name: "monkey-mongo-service:feature1"
+          namespace: appdev
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-feature1
+  labels:
+    app: service-feature1
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+  selector:
+    app: service-feature1
+
+---
+apiVersion: v1
+kind: Route
+metadata:
+  name: service-feature1
+spec:
+  to:
+    kind: Service
+    name: service-feature1
+
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-feature2
+  labels:
+    app: service-feature2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-feature2
+  template:
+    metadata:
+      labels:
+        app: service-feature2
+    spec:
+      containers:
+        - name: service-feature1
+          image: c3smonkey/monkey-mongo-service:feature2
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SELECTOR
+              value: service-feature2
+            - name: MONGO_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: database-user
+                  name: mongodb
+            - name: MONGO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: database-password
+                  name: mongodb
+            - name: MONGO_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  key: database-name
+                  name: mongodb
+triggers:
+  - type: "ConfigChange"
+  - type: "ImageChange"
+    imageChangeParams:
+      automatic: true
+      containerNames:
+        - "service-feature2"
+      from:
+        kind: "ImageStreamTag"
+        name: "monkey-mongo-service:feature1"
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-feature2
+  labels:
+    app: service-feature2
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+  selector:
+    app: service-feature2
+
+---
+apiVersion: v1
+kind: Route
+metadata:
+  name: service-feature2
+spec:
+  to:
+    kind: Service
+    name: service-feature2
+---
+
+# oc patch route/bluegreen -p '{"spec":{"to":{"name":"service-feature2"}}}'
+---
+apiVersion: v1
+kind: Route
+metadata:
+  name: bluegreen
+spec:
+  to:
+    kind: Service
+    name: service-feature1
+
+# oc expose service service-feature1 --name='ab-route' -l name='ab-route'
+# oc annotate route/ab-route haproxy.router.openshift.io/balance=roundrobin
+# for x in (seq 110); http http://ab-route-appdev.apps.c3smonkey.ch/actuator/info | jq .git.branch ; end
+# oc set route-backends ab-route service-feature1=100 service-feature2=0
+# oc set route-backends ab-route --adjust service-feature2=+50%
+#---
+#apiVersion: v1
+#kind: Route
+#metadata:
+#  name: ab-route
+#spec:
+#  to:
+#    kind: Service
+#    name: service-feature1

@@ -13,6 +13,30 @@ This is used for reading the Secrets via Spring Boot App
 oc policy add-role-to-user view system:serviceaccount:dev:default
 ```
 
+
+oc import-image monkey-mongo-service:feature1  --from=c3smonkey/monkey-mongo-service:feature1 --confirm
+oc import-image monkey-mongo-service:feature2  --from=c3smonkey/monkey-mongo-service:feature2 --confirm
+
+
+oc apply -f deployment-config-feature1.yaml
+oc apply -f deployment-route-feature1.yaml
+
+
+
+
+
+
+
+
+
+
+oc new-app --docker-image=c3smonkey/monkey-mongo-service:feature1 \
+    --name='service-feature1' \
+    -l name='feature1' \
+    -e SELECTOR=feature1
+
+
+
 ## Deploy Feature1
 ```bash
 oc apply -f k8s/deployment-feature1.yaml

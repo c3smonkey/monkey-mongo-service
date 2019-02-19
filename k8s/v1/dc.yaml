@@ -1,0 +1,51 @@
+---
+kind: "DeploymentConfig"
+apiVersion: "v1"
+metadata:
+  name: "service-feature1"
+spec:
+  template:
+    metadata:
+      labels:
+        name: "service-feature1"
+    spec:
+      containers:
+        - name: "service-feature1"
+          image: "c3smonkey/monkey-mongo-service:feature1"
+          ports:
+            - containerPort: 8080
+              protocol: "TCP"
+          env:
+            - name: SELECTOR
+              value: monkey-service
+            - name: MONGO_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: database-user
+                  name: mongodb
+            - name: MONGO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: database-password
+                  name: mongodb
+            - name: MONGO_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  key: database-name
+                  name: mongodb
+  replicas: 1
+  triggers:
+    - type: "ConfigChange"
+    - type: "ImageChange"
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - "service-feature1"
+        from:
+          kind: "ImageStreamTag"
+          name: "monkey-mongo-service:feature1"
+  strategy:
+    type: "Rolling"
+  paused: false
+  revisionHistoryLimit: 2
+  minReadySeconds: 0

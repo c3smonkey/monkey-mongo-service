@@ -39,6 +39,14 @@ jobs:
           command: |
             mvn package -B
       - run:
+          name: Maven Build and Test
+          command: |
+            mvn sonar:sonar \
+              -Dsonar.projectKey=c3smonkey_monkey-mongo-service \
+              -Dsonar.organization=c3smonkey \
+              -Dsonar.host.url=https://sonarcloud.io \
+              -Dsonar.login=$SONAR_TOKEN
+      - run:
           name: Copy deployment artifacts to workspace
           command: |
             cp target/${CIRCLE_PROJECT_REPONAME}-*.jar ~/repo/monkey-mongo-service.jar

@@ -39,7 +39,7 @@ jobs:
           command: |
             mvn package -B
       - run:
-          name: Maven Build and Test
+          name: Sonar
           command: |
             mvn sonar:sonar \
               -Dsonar.projectKey=c3smonkey_monkey-mongo-service \
